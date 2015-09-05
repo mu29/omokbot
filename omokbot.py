@@ -9,6 +9,7 @@ from settings import *
 class OmokBot(object):
 	def __init__(self):
 		self.client = SlackClient(TOKEN)
+		self.game = {}
 		self.commands = {}
 
 	def load(self):
@@ -20,14 +21,16 @@ class OmokBot(object):
 	def dispatch(self, events):
 		messages = []
 		for e in events:
+			user = e.get('user', '')
 			channel = e.get('channel', '')
 			text = e.get('text', '')
 			command = text.split(' ')[0]
 			content = text.replace(command + ' ', '', 1)
 
-			msg = Message()
-			msg.set(channel, command, content)
-			messages.append(msg)
+			if user and channel and command
+				msg = Message()
+				msg.set(user, channel, command, content)
+				messages.append(msg)
 
 		return messages
 
