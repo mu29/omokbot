@@ -23,7 +23,7 @@ class OmokBot(object):
 			channel = e.get('channel', '')
 			text = e.get('text', '')
 			command = text.split(' ')[0]
-			content = text.replace(command + ' ', '')
+			content = text.replace(command + ' ', '', 1)
 
 			msg = Message()
 			msg.set(channel, command, content)
@@ -31,20 +31,18 @@ class OmokBot(object):
 
 		return messages
 
-	def handle(self, message):
-		if (message.command in self.commands):
-			print("!")
-			self.commands[message.command].run(self, message)
+	def handle(self, messages):
+		for msg in messages:
+			if msg.command in self.commands:
+				self.commands[msg.command].run(self, msg)
 
 	def run(self):
 		self.client.rtm_connect()
-		#self.client.rtm_send_message('random', u'슬랙 봇 테스트')
 		while True:
 			events = self.client.rtm_read()
 			if events:
 				messages = self.dispatch(events)
-				for msg in messages:
-					self.handle(msg)
+				self.handle(messages)
 			time.sleep(1)
 
 
