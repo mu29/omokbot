@@ -2,14 +2,22 @@
 
 import time
 from slackclient import SlackClient
+from importlib import import_module
 from message import *
 from settings import *
 
 class OmokBot(object):
 	def __init__(self):
 		self.client = SlackClient(TOKEN)
+		self.commands = {}
 
-	def dispatch_message(self, events):
+	def load(self):
+		for i in range(0, len(COMMANDS) / 2):
+			name = COMMANDS[i * 2]
+			func = COMMANDS[i * 2 + 1]
+			self.commands[name] = import_module('commands.' + func)
+
+	def dispatch(self, events):
 		messages = []
 		for e in events:
 			channel = e.get('channel', '')
@@ -18,12 +26,15 @@ class OmokBot(object):
 			content = text.replace(command + ' ', '')
 
 			msg = Message()
-			msg.set(text, command, content)
+			msg.set(channel, command, content)
 			messages.append(msg)
 
-			print(channel + "," + command + "," + content);
-
 		return messages
+
+	def handle(self, message):
+		if (message.command in self.commands):
+			print("!")
+			self.commands[message.command].run(self, message)
 
 	def run(self):
 		self.client.rtm_connect()
@@ -31,11 +42,13 @@ class OmokBot(object):
 		while True:
 			events = self.client.rtm_read()
 			if events:
-				messages = self.dispatch_message(events)
+				messages = self.dispatch(events)
+				for msg in messages:
+					self.handle(msg)
 			time.sleep(1)
-
 
 
 if '__main__' == __name__:
 	bot = OmokBot()
+	bot.load()
 	bot.run()
