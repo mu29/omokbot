@@ -1,5 +1,6 @@
 # coding: utf-8
 
+import re
 import time
 from slackclient import SlackClient
 from importlib import import_module
@@ -30,6 +31,11 @@ class OmokBot(object):
 			if user and channel and command:
 				msg = Message()
 				msg.set(user, channel, command, content)
+				messages.append(msg)
+
+			if user in self.game and re.match("[A-O][1-9][0-9]?", text):
+				msg = Message()
+				msg.set(user, channel, u'!놓기', text)
 				messages.append(msg)
 
 		return messages
