@@ -27,7 +27,7 @@ class OmokBot(object):
 			command = text.split(' ')[0]
 			content = text.replace(command + ' ', '', 1)
 
-			if user and channel and command
+			if user and channel and command:
 				msg = Message()
 				msg.set(user, channel, command, content)
 				messages.append(msg)
