@@ -9,7 +9,8 @@ COMMANDS = [
     u'!ㄴㄱ', 'put_block',
 ]
 
-BLACK_BLOCK = 1
-WHITE_BLOCK = 2
+BLANK_BLOCK = "0"
+BLACK_BLOCK = "1"
+WHITE_BLOCK = "2"
 
 TOKEN = None
