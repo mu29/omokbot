@@ -35,7 +35,7 @@ class OmokBot(object):
 
 			if user in self.game and re.match("[A-O][1-9][0-9]?", text):
 				msg = Message()
-				msg.set(user, channel, u'!놓기', text)
+				msg.set(user, channel, u'놓기', text)
 				messages.append(msg)
 
 		return messages
