@@ -1,12 +1,12 @@
 # coding: utf-8
 
 COMMANDS = [
-    u'hello', 'hello_world',
-    u'안녕', 'hello_world',
-    u'!시작', 'start_game',
-    u'!ㅅㅈ', 'start_game',
-    u'!놓기', 'put_block',
-    u'!ㄴㄱ', 'put_block',
+    u'시작', 'start_game',
+    u'ㅅㅈ', 'start_game',
+    u'끝', 'end_game',
+    u'ㄲ', 'end_game',
+    u'놓기', 'put_block',
+    u'ㄴㄱ', 'put_block',
 ]
 
 BLANK_BLOCK = "0"
