@@ -20,10 +20,7 @@ class Game(object):
     def get_score(self, player, x, y):
         if x < 0 or y < 0 or x > 14 or y > 14: return 0
 
-        top = x if x < y else y
-        bottom = (15 - x) if (15 - x) < (15 - y) else (15 - y)
         max_match = 0
-
         # 양옆
         match = 1
         for i in reversed(range(0, x)):
@@ -44,6 +41,8 @@ class Game(object):
             else: break
         if match > max_match: max_match = match
 
+        top = (x + 1) if (x + 1) < (y + 1) else (y + 1)
+        bottom = (15 - x) if (15 - x) < (15 - y) else (15 - y)
         # 오른쪽아래로
         match = 1
         for i in range(1, top):
@@ -54,13 +53,15 @@ class Game(object):
             else: break
         if match > max_match: max_match = match
 
+        top = (15 - x) if (15 - x) < (y + 1) else (y + 1)
+        bottom = (x + 1) if (x + 1) < (15 - y) else (15 - y)
         # 오른쪽위로
         match = 1
         for i in range(1, top):
-            if self.board[(y + i) * 15 + (x + i)] == player: match += 1
+            if self.board[(y - i) * 15 + (x + i)] == player: match += 1
             else: break
         for i in range(1, bottom):
-            if self.board[(y - i) * 15 + (x - i)] == player: match += 1
+            if self.board[(y + i) * 15 + (x - i)] == player: match += 1
             else: break
         if match > max_match: max_match = match
 
@@ -69,7 +70,7 @@ class Game(object):
     def ai_turn(self):
         candidates = {}
         for i in range(0, 225):
-            if self.board[i] == BLACK_BLOCK:
+            if self.board[i] != BLANK_BLOCK:
                 x_pos = i % 15
                 y_pos = i / 15
                 for y_plus in range(-1, 2):
