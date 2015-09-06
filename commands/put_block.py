@@ -33,6 +33,7 @@ def run(bot, msg):
     if game.judge() == BLACK_BLOCK:
         bot.client.rtm_send_message(msg.channel, u"니가 이겼어 ㄷㄷ")
         del(bot.game[msg.user])
+        return
 
     game.ai_turn()
     bot.client.rtm_send_message(msg.channel, bot.game[msg.user].get_board())
