@@ -30,13 +30,13 @@ def run(bot, msg):
     game.board = game.board[:pos] + BLACK_BLOCK + game.board[pos + 1:]
     bot.client.rtm_send_message(msg.channel, bot.game[msg.user].get_board())
 
-    if game.judge == BLACK_BLOCK:
+    if game.judge() == BLACK_BLOCK:
         bot.client.rtm_send_message(msg.channel, u"니가 이겼어 ㄷㄷ")
         del(bot.game[msg.user])
 
     game.ai_turn()
     bot.client.rtm_send_message(msg.channel, bot.game[msg.user].get_board())
 
-    if game.judge == WHITE_BLOCK:
+    if game.judge() == WHITE_BLOCK:
         bot.client.rtm_send_message(msg.channel, u"내가 이겼네?")
         del(bot.game[msg.user])

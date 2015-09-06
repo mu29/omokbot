@@ -18,47 +18,48 @@ class Game(object):
 
     def judge(self):
         for y in range(0, 15):
-            count = 0
+            count = 1
             prev = self.board[y * 15]
             for x in range(1, 15):
                 if self.board[y * 15 + x] == prev:
                     count += 1
-                    if count == 5: return prev
+                    if count == 5 and prev != BLANK_BLOCK: return prev
                 else:
-                    count = 0
+                    count = 1
                     prev = self.board[y * 15 + x]
 
         for x in range(0, 15):
-            count = 0
+            count = 1
             prev = self.board[x]
             for y in range(1, 15):
                 if self.board[y * 15 + x] == prev:
                     count += 1
-                    if count == 5: return prev
+                    if count == 5 and prev != BLANK_BLOCK: return prev
                 else:
-                    count = 0
+                    count = 1
                     prev = self.board[y * 15 + x]
+                print count
 
         for x in range(0, 15):
-            count = 0
+            count = 1
             prev = self.board[x]
             for i in range(1, 15 - x):
                 if self.board[i * 15 + (x + i)] == prev:
                     count += 1
-                    if count == 5: return prev
+                    if count == 5 and prev != BLANK_BLOCK: return prev
                 else:
-                    count = 0
+                    count = 1
                     prev = self.board[i * 15 + (x + i)]
 
         for y in range(0, 15):
-            count = 0
+            count = 1
             prev = self.board[y * 15]
             for i in range(1, y + 1):
                 if self.board[(y - i) * 15 + i] == prev:
                     count += 1
-                    if count == 5: return prev
+                    if count == 5 and prev != BLANK_BLOCK: return prev
                 else:
-                    count = 0
+                    count = 1
                     prev = self.board[(y - i) * 15 + i]
 
         return BLANK_BLOCK
