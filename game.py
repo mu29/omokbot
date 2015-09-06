@@ -38,7 +38,6 @@ class Game(object):
                 else:
                     count = 1
                     prev = self.board[y * 15 + x]
-                print count
 
         for x in range(0, 15):
             count = 1

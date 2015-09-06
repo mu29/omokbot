@@ -9,5 +9,5 @@ def run(bot, msg):
         bot.client.rtm_send_message(msg.channel, u"하던 게임부터 마무리해주렴")
     else:
         bot.game[msg.user] = Game()
-        bot.client.rtm_send_message(msg.channel, u"게임을 시작하지")
+        bot.client.rtm_send_message(msg.channel, u"[A-O][1-15]를 입력해서 돌을 놓을 수 있어 (ex : F8)")
         bot.client.rtm_send_message(msg.channel, bot.game[msg.user].get_board())
