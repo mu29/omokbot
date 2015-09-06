@@ -16,6 +16,54 @@ class Game(object):
 
         return board
 
+    def judge(self):
+        for y in range(0, 15):
+            count = 0
+            prev = self.board[y * 15]
+            for x in range(1, 15):
+                if self.board[y * 15 + x] == prev:
+                    count += 1
+                    if count == 5: return prev
+                else:
+                    count = 0
+                    prev = self.board[y * 15 + x]
+
+        for x in range(0, 15):
+            count = 0
+            prev = self.board[x]
+            for y in range(1, 15):
+                if self.board[y * 15 + x] == prev:
+                    count += 1
+                    if count == 5: return prev
+                else:
+                    count = 0
+                    prev = self.board[y * 15 + x]
+
+        for x in range(0, 15):
+            count = 0
+            prev = self.board[x]
+            for i in range(1, 15 - x):
+                if self.board[i * 15 + (x + i)] == prev:
+                    count += 1
+                    if count == 5: return prev
+                else:
+                    count = 0
+                    prev = self.board[i * 15 + (x + i)]
+
+        for y in range(0, 15):
+            count = 0
+            prev = self.board[y * 15]
+            for i in range(1, y + 1):
+                if self.board[(y - i) * 15 + i] == prev:
+                    count += 1
+                    if count == 5: return prev
+                else:
+                    count = 0
+                    prev = self.board[(y - i) * 15 + i]
+
+        return BLANK_BLOCK
+
+
     # 임시로 평가 테이블만
     def get_score(self, player, x, y):
         if x < 0 or y < 0 or x > 14 or y > 14: return 0
